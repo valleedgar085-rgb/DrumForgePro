@@ -33,7 +33,9 @@ class DrumEngine {
     if (!this.isLoaded) return;
     if (this.players.has(voice)) {
       const player = this.players.player(voice);
-      player.volume.value = 20 * Math.log10(velocity);
+      // Convert velocity (0-1) to decibels with bounds checking
+      const clampedVelocity = Math.max(0.01, Math.min(1, velocity));
+      player.volume.value = 20 * Math.log10(clampedVelocity);
       player.start();
     }
   }

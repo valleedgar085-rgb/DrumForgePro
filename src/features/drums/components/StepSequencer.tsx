@@ -28,6 +28,7 @@ export const StepSequencer: React.FC = () => {
     ).start(0);
 
     return () => {
+      loop.stop();
       loop.dispose();
     };
   }, [pattern]);
