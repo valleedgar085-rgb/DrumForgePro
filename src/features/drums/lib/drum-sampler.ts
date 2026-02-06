@@ -34,7 +34,9 @@ class DrumEngine {
     if (this.players.has(voice)) {
       const player = this.players.player(voice);
       // Apply velocity as volume (convert 0-1 to decibels)
-      const db = velocity <= 0 ? -Infinity : 20 * Math.log10(velocity);
+      // Clamp velocity to prevent -Infinity volume
+      const clampedVelocity = Math.max(0.01, Math.min(1, velocity));
+      const db = 20 * Math.log10(clampedVelocity);
       player.volume.value = db;
       player.start();
     }
